@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">boaviagem</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="usuario">Usuario</string>
+    <string name="senha">Senha</string>
+    <string name="entrar">Entrar</string>
+    <string name="erro_autenticacao">Usuário ou senha inválidos</string>
+    <string name="novo_gasto">Novo Gasto</string>
+    <string name="nova_viagem">Nova viagem</string>
+    <string name="minhas_viagens">Minhas viagens</string>
+    <string name="configuracoes">Configurações</string>
+    <string name="destino">Destino</string>
+    <string name="tipo_da_viagem">Tipo da viagem</string>
+    <string name="lazer">Lazer</string>
+    <string name="negocios">Negócios</string>
+    <string name="data_da_chegada">Data da chegada</string>
+    <string name="data_da_saida">Data da saída</string>
+    <string name="selecione">Selecione</string>
+    <string name="orcamento">Orçamento</string>
+    <string name="salvar">Salvar</string>
+    <string name="quantidade_de_pessoas">Quantidade de pessoas</string>
+    <string name="valor">Valor</string>
+    <string name="data">Data</string>
+    <string name="descricao">Descrição</string>
+    <string name="local">Local</string>
+    <string name="gastei">Gastei</string>
+</resources>
