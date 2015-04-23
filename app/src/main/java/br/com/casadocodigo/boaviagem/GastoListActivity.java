@@ -2,10 +2,14 @@ package br.com.casadocodigo.boaviagem;
 
 import android.app.ListActivity;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -30,6 +34,7 @@ public class GastoListActivity extends ListActivity implements AdapterView.OnIte
         SimpleAdapter adapter = new SimpleAdapter(this, listarGastos(), R.layout.lista_gasto,
                 de, para);
 
+        adapter.setViewBinder(new GastoViewBinder());
         setListAdapter(adapter);
 
         /*setListAdapter(new ArrayAdapter<String>(this,
@@ -37,6 +42,8 @@ public class GastoListActivity extends ListActivity implements AdapterView.OnIte
 
         ListView listView = getListView();
         listView.setOnItemClickListener(this);
+
+        registerForContextMenu(listView);
     }
 
     private List<Map<String, Object>> listarGastos() {
@@ -47,6 +54,34 @@ public class GastoListActivity extends ListActivity implements AdapterView.OnIte
         item.put("descricao", "Diária Hotel");
         item.put("valor", "R$ 260,00");
         item.put("categoria", R.color.categoria_hospedagem);
+        gastos.add(item);
+
+        item = new HashMap<>();
+        item.put("data", "07/02/2012");
+        item.put("descricao", "Diária Hotel");
+        item.put("valor", "R$ 160,00");
+        item.put("categoria", R.color.categoria_hospedagem);
+        gastos.add(item);
+
+        item = new HashMap<>();
+        item.put("data", "04/02/2012");
+        item.put("descricao", "Almoço");
+        item.put("valor", "R$ 80,00");
+        item.put("categoria", R.color.categoria_alimentacao);
+        gastos.add(item);
+
+        item = new HashMap<>();
+        item.put("data", "04/02/2012");
+        item.put("descricao", "Táxi");
+        item.put("valor", "R$ 50,00");
+        item.put("categoria", R.color.categoria_transporte);
+        gastos.add(item);
+
+        item = new HashMap<>();
+        item.put("data", "04/02/2012");
+        item.put("descricao", "Rvista");
+        item.put("valor", "R$ 20,00");
+        item.put("categoria", R.color.categoria_outros);
         gastos.add(item);
 
 //      return Arrays.asList("Sandúiche R$ 19,90", "Táxi Aeroporto - Hotel R$ 34,90", "Revista R$ 12,00");
@@ -61,5 +96,50 @@ public class GastoListActivity extends ListActivity implements AdapterView.OnIte
         String descricao = (String) map.get("descricao");
         String mensagem = "Gasto selecionado: " + descricao;
         Toast.makeText(this, mensagem, Toast.LENGTH_SHORT).show();
+    }
+
+    private String dataAnterior = "";
+    private class GastoViewBinder implements SimpleAdapter.ViewBinder {
+
+        @Override
+        public boolean setViewValue(View view, Object data, String textRepresentation) {
+
+            if (view.getId() == R.id.data) {
+                if (!dataAnterior.equals(data)) {
+                    TextView textView = (TextView) view;
+                    textView.setText(textRepresentation);
+                    dataAnterior = textRepresentation;
+                    view.setVisibility(View.VISIBLE);
+                } else {
+                    view.setVisibility(View.GONE);
+                }
+                return true;
+            }
+
+            if (view.getId() == R.id.categoria) {
+                Integer id = (Integer) data;
+                view.setBackgroundColor(getResources().getColor(id));
+                return true;
+            }
+            return false;
+        }
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.gasto_menu, menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.remover) {
+            AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+            gastos.remove(info.position);
+            getListView().invalidateViews();
+            dataAnterior = "";
+            return true;
+        }
+        return super.onContextItemSelected(item);
     }
 }
