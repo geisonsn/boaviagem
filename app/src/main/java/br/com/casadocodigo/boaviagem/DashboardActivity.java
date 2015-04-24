@@ -2,7 +2,6 @@ package br.com.casadocodigo.boaviagem;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -13,8 +12,6 @@ import android.view.View;
  * Created by p001234 on 22/04/15.
  */
 public class DashboardActivity extends Activity {
-
-    private static final String MANTER_CONECTADO = "manter_conectado";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,10 +55,20 @@ public class DashboardActivity extends Activity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
-        boolean conectado = preferencias.getBoolean(MANTER_CONECTADO, false);
+//        SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
+//        boolean conectado = preferencias.getBoolean(MANTER_CONECTADO, false);
+        /*boolean conectado = getSharedPreferences(BoaViagemActivity.MINHAS_PREFERENCIAS, MODE_PRIVATE).getBoolean(BoaViagemActivity.MANTER_CONECTADO, false);
         if (conectado) {
-            finish();
-        }
+            fecharAplicacao();
+        }*/
+    }
+
+    //Má prática adiciona
+    public void fecharAplicacao() {
+        Intent main = new Intent(Intent.ACTION_MAIN);
+        main.addCategory(Intent.CATEGORY_HOME);
+        main.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        main.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(main);
     }
 }

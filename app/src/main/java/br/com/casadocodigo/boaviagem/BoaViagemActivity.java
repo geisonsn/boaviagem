@@ -14,7 +14,8 @@ import android.widget.Toast;
 
 public class BoaViagemActivity extends Activity {
 
-    private static final String MANTER_CONECTADO = "manter_conectado";
+    public static final String MINHAS_PREFERENCIAS = "MinhasPreferencias";
+    public static final String MANTER_CONECTADO = "manter_conectado";
     private EditText usuario;
     private EditText senha;
     private CheckBox manterConectado;
@@ -28,14 +29,58 @@ public class BoaViagemActivity extends Activity {
         senha = (EditText) findViewById(R.id.senha);
         manterConectado = (CheckBox) findViewById(R.id.manterConectado);
 
-        SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
-        boolean conectado = preferencias.getBoolean(MANTER_CONECTADO, false);
+        //SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
+        //boolean conectado = preferencias.getBoolean(MANTER_CONECTADO, false);
+
+        boolean conectado = getSharedPreferences(BoaViagemActivity.MINHAS_PREFERENCIAS, MODE_PRIVATE).getBoolean(BoaViagemActivity.MANTER_CONECTADO, false);
 
         if (conectado) {
             startActivity(new Intent(this, DashboardActivity.class));
         }
     }
 
+    @Override
+    protected void onRestart() {
+//        Toast.makeText(this, "OnRestart BoaViagemActivity.class", Toast.LENGTH_SHORT).show();
+        super.onRestart();
+//        SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
+//        boolean conectado = preferencias.getBoolean(MANTER_CONECTADO, false);
+
+        boolean conectado = getSharedPreferences(BoaViagemActivity.MINHAS_PREFERENCIAS, MODE_PRIVATE).getBoolean(BoaViagemActivity.MANTER_CONECTADO, false);
+        if (conectado) {
+            finish();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+//        Toast.makeText(this, "OnStart BoaViagemActivity.class", Toast.LENGTH_SHORT).show();
+        super.onStart();
+    }
+
+    @Override
+    protected void onResume() {
+//        Toast.makeText(this, "OnResume BoaViagemActivity.class", Toast.LENGTH_SHORT).show();
+        super.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+//        Toast.makeText(this, "OnPause BoaViagemActivity.class", Toast.LENGTH_SHORT).show();
+        super.onPause();
+    }
+
+    @Override
+    protected void onStop() {
+//        Toast.makeText(this, "OnStop BoaViagemActivity.class", Toast.LENGTH_SHORT).show();
+        super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+//        Toast.makeText(this, "OnDestroy BoaViagemActivity.class", Toast.LENGTH_SHORT).show();
+        super.onDestroy();
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -67,7 +112,8 @@ public class BoaViagemActivity extends Activity {
                 "123".equals(senha)) {
 
             //Salvando preferências do usuário
-            SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
+//            SharedPreferences preferencias = getPreferences(MODE_PRIVATE);
+            SharedPreferences preferencias = getSharedPreferences(MINHAS_PREFERENCIAS, MODE_PRIVATE);
             SharedPreferences.Editor editor = preferencias.edit();
             editor.putBoolean(MANTER_CONECTADO, manterConectado.isChecked());
             editor.commit();
