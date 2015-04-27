@@ -197,12 +197,20 @@ public class ViagemListActivity extends ListActivity implements AdapterView.OnIt
                 break;
             case DialogInterface.BUTTON_POSITIVE:
                 viagens.remove(this.viagemSelecionada);
+                removerViagem(id);
                 getListView().invalidateViews();
                 break;
             case DialogInterface.BUTTON_NEGATIVE:
                 dialogConfirmacao.dismiss();
                 break;
         }
+    }
+
+    private void removerViagem(String id) {
+        SQLiteDatabase db = helper.getWritableDatabase();
+        String where[] = new String[] {id};
+        db.delete("gasto", "viagem_id = ?", where);
+        db.delete("viagem", "_id = ?", where);
     }
 
     private AlertDialog criarAlertDialog() {
