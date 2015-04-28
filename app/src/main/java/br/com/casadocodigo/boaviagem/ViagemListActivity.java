@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.casadocodigo.boaviagem.dao.BoaViagemDAO;
+
 /**
  * Created by geison on 22/04/15.
  */
@@ -36,6 +38,7 @@ public class ViagemListActivity extends ListActivity implements AdapterView.OnIt
     private int viagemSelecionada;
     private AlertDialog dialogConfirmacao;
     private Double valorLimite;
+    private BoaViagemDAO boaViagemDAO;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -27,4 +27,14 @@ public class BoaViagemDAO {
     public void close() {
         helper.close();
     }
+
+    /*public List<Viagem> listViagem() {
+        Cursor cursor = getDb().query(DatabaseHelper.Viagem.TABELA,
+                DatabaseHelper.Viagem.COLUNAS,
+                null, null, null, null, null);
+        List<Viagem> viagens = new ArrayList<>();
+        while (cursor.moveToNext()) {
+            Viagem viagem = criarViagem(cursor);
+        }
+    }*/
 }
