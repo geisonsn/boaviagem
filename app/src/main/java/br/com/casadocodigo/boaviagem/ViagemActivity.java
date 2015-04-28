@@ -51,15 +51,7 @@ public class ViagemActivity extends Activity {
         //datas.put(R.id.dataChegada, dataChegada);
         //datas.put(R.id.dataSaida, dataSaida);
 
-        Calendar calendar = Calendar.getInstance();
-        ano = calendar.get(Calendar.YEAR);
-        mes = calendar.get(Calendar.MONTH);
-        dia = calendar.get(Calendar.DAY_OF_MONTH);
-
-        dataChegadaButton = (Button) findViewById(R.id.dataChegada);
-        dataChegadaButton.setText(dia + "/" + (mes + 1) + "/" + ano);
-        dataSaidaButton = (Button) findViewById(R.id.dataSaida);
-        dataSaidaButton.setText(dia + "/" + (mes + 1) + "/" + ano);
+        inicializarDatas(); //Inicializa as datas de chegada e saída
 
         destino = (EditText) findViewById(R.id.destino);
         quantidadePessoas = (EditText) findViewById(R.id.quantidadePessoas);
@@ -72,6 +64,21 @@ public class ViagemActivity extends Activity {
         if (id != null) {
             prepararEdicao();
         }
+    }
+
+    private void inicializarDatas() {
+        Calendar calendar = Calendar.getInstance();
+        this.ano = calendar.get(Calendar.YEAR);
+        this.mes = calendar.get(Calendar.MONTH);
+        this.dia = calendar.get(Calendar.DAY_OF_MONTH);
+
+        dataChegadaButton = (Button) findViewById(R.id.dataChegada);
+        dataChegadaButton.setText(dia + "/" + (mes + 1) + "/" + ano);
+        dataSaidaButton = (Button) findViewById(R.id.dataSaida);
+        dataSaidaButton.setText(dia + "/" + (mes + 1) + "/" + ano);
+
+        datas.put(R.id.dataChegada, Calendar.getInstance());
+        datas.put(R.id.dataSaida, Calendar.getInstance());
     }
 
     private void prepararEdicao() {

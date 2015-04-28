@@ -23,9 +23,9 @@ public class BoaViagemDAO {
         helper = new DatabaseHelper(context);
     }
 
-    private SQLiteDatabase getDb() {
-        if (db == null) {
-            db = helper.getWritableDatabase();
+    public SQLiteDatabase getDb() {
+        if (this.db == null) {
+            this.db = helper.getWritableDatabase();
         }
         return db;
     }
@@ -35,14 +35,18 @@ public class BoaViagemDAO {
     }
 
     public List<Viagem> listarViagem() {
+
         Cursor cursor = getDb().query(DatabaseHelper.Viagem.TABELA,
                 DatabaseHelper.Viagem.COLUNAS,
                 null, null, null, null, null);
+
         List<Viagem> viagens = new ArrayList<>();
+
         while (cursor.moveToNext()) {
             Viagem viagem = criarViagem(cursor);
             viagens.add(viagem);
         }
+
         return viagens;
     }
 

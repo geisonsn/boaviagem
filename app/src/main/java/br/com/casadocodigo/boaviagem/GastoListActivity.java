@@ -17,12 +17,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import br.com.casadocodigo.boaviagem.dao.GastoDAO;
+import br.com.casadocodigo.boaviagem.domain.Gasto;
+
 /**
  * Created by geison on 22/04/15.
  */
 public class GastoListActivity extends ListActivity implements AdapterView.OnItemClickListener {
 
+    private GastoDAO dao;
+
     private List<Map<String,Object>> gastos;
+    private String idViagem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,9 +50,33 @@ public class GastoListActivity extends ListActivity implements AdapterView.OnIte
         listView.setOnItemClickListener(this);
 
         registerForContextMenu(listView);
+
+        idViagem = getIntent().getStringExtra(Constantes.VIAGEM_ID);
     }
 
     private List<Map<String, Object>> listarGastos() {
+
+        dao = new GastoDAO(this);
+
+        List<Gasto> listGastos = dao.listarGasto(idViagem);
+
+        gastos = new ArrayList<Map<String, Object>>();
+
+        for (Gasto gasto : listGastos) {
+            Map<String, Object> item = new HashMap<>();
+            item.put("data", gasto.getData());
+            item.put("descricao", gasto.getDescricao());
+            item.put("valor", gasto.getValor());
+            item.put("categoria", R.color.categoria_hospedagem);
+            gastos.add(item);
+        }
+
+        dao.close();
+
+        return gastos;
+    }
+
+    private List<Map<String, Object>> listarGastosOLD() {
         gastos = new ArrayList<>();
 
         Map<String, Object> item = new HashMap<>();
@@ -136,10 +166,15 @@ public class GastoListActivity extends ListActivity implements AdapterView.OnIte
         if (item.getItemId() == R.id.remover) {
             AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
             gastos.remove(info.position);
+            removerGasto();
             getListView().invalidateViews();
             dataAnterior = "";
             return true;
         }
         return super.onContextItemSelected(item);
+    }
+
+    private void removerGasto() {
+
     }
 }
